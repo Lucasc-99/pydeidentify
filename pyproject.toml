@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "pydeidentify"
-version = "0.1.0"
+version = "0.1.1"
 description = "A simple text deidentification tool, built on huggingface's named entity recognition pipeline"
 authors = ["Lucasc-99 <lucascecchi@gmail.com>"]
+readme = "pydeidentify/README.md"
 license = "MIT"
 
 [tool.poetry.dependencies]

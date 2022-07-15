@@ -4,12 +4,12 @@ __pycache__/
 *$py.class
 
 # Package stuff
-./pydeidentify/__pycache__/
-./pydeidentify/.venv
-./pydeidentify/.gitignore
-./pydeidentify/poetry.lock
-./pydeidentify/pyproject.toml
-./pydeidentify/README.md
+pydeidentify/__pycache__/
+pydeidentify/.venv
+pydeidentify/.gitignore
+pydeidentify/poetry.lock
+pydeidentify/pyproject.toml
+pydeidentify/README.md
 
 # C extensions
 *.so
