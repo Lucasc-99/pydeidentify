@@ -19,6 +19,8 @@ pip install pydeidentify
 from pydeidentify import Deidentifier, DeidentifiedText
 
 # Deidentify using this Deidentifier class
+# Note that the model pipeline is CASE SENSITIVE
+
 d = Deidentifier()
 d_text: DeidentifiedText = d.deidentify("My name is Joe Biden, I'm from Scranton, Pennsylvania and I like to create python packages")
 
