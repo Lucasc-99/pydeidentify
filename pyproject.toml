@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pydeidentify"
+version = "0.1.0"
+description = "A simple text deidentification tool, built on huggingface's named entity recognition pipeline"
+authors = ["Lucasc-99 <lucascecchi@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+torch = "^1.12.0"
+transformers = "^4.20.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
