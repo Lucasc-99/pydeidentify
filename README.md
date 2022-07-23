@@ -1,6 +1,6 @@
 # pydeidentify
 
-An exceedingly simple-to-use library for text deidentification, build on spacy's state-of-the-art named entity recognition pipeline
+An simple tool for text deidentification, built on spacy's state-of-the-art named entity recognition pipeline
 
 ## Installation
 

@@ -82,14 +82,16 @@ class Deidentifier:
     :param text: text to deidentify
     :param included_entity_types: entities that will be deidentified, see SUPPORTED_ENTITIES for all supported entities
     :param exceptions: snippets that will not be deidentified
+    :param spacy_model: en_core_web_trf comes installed with pydeidentify by default, see https://spacy.io/models/ for more models and langauges
     """
 
     def __init__(
         self,
         included_entity_types: set = {"PERSON", "ORG", "FAC", "LOC", "GPE", "DATE"},
         exceptions: set = {},
+        spacy_model: str = "en_core_web_trf",
     ):
-        self.named_entity_pipe = spacy.load("en_core_web_trf")
+        self.named_entity_pipe = spacy.load(spacy_model)
         self.included_entity_types = included_entity_types
         self.exceptions = exceptions
 
