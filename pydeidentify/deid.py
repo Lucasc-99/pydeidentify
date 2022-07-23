@@ -4,9 +4,9 @@ import spacy
 import warnings
 
 
-
 # Catch benign warnings from spacy about CUDA
 warnings.filterwarnings("ignore", category=UserWarning)
+
 
 class DeidentifiedText:
     """

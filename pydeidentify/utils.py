@@ -3,14 +3,13 @@ from spacy.util import is_package as spacy_is_package
 from typing import Dict
 
 
-def cached_model_download(model_name: str)-> None:
+def cached_model_download(model_name: str) -> None:
     """
     Download spacy model if it is not already downloaded.
     """
     if not spacy_is_package(model_name):
         spacy_download(model_name)
-        
-        
+
 
 SUPPORTED_ENTITIES: Dict[str, str] = {
     "PERSON": "People, including fictional.",

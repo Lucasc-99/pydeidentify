@@ -1,6 +1,6 @@
 # pydeidentify
 
-A simple tool for text deidentification, built on spacy's state-of-the-art named entity recognition pipeline
+A simple tool for text deidentification, built on spacy's state-of-the-art named entity recognition pipeline, now supporting 22 languages.
 
 ## Installation
 
@@ -44,9 +44,11 @@ print(d_text.counts) # {'ORG': 0, 'LOC': 0, 'PERSON': 1, 'GPE': 2, 'DATE': 1, 'F
 
 # Use any spacy model that supports named entity recognition by passing it's name in the spacy_model parameter
 # The line below loads the chinese version of the default english model: 'en_core_web_trf'
-d_spanish = Deidentifier(spacy_model="zh_core_web_trf") 
+# see https://spacy.io/models for all models
+d_chinese = Deidentifier(spacy_model="zh_core_web_trf") 
 ```
 
+See all available langauges and pipelines at https://spacy.io/models
 
 ## Get and Run Example Code with Poetry
 install poetry at https://python-poetry.org/docs/#installation

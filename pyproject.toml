@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pydeidentify"
-version = "0.2.0"
-description = "A simple text deidentification tool, built on spacy's state-of-the-art named entity recognition pipeline"
+version = "0.2.1"
+description = "A simple text deidentification tool, built on spacy's state-of-the-art named entity recognition pipeline, now supporting 22 languages."
 authors = ["Lucasc-99 <lucascecchi@gmail.com>"]
 readme = "pydeidentify/README.md"
 license = "MIT"
