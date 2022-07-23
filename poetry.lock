@@ -64,6 +64,22 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "en-core-web-trf"
+version = "3.4.0"
+description = "English transformer pipeline (roberta-base). Components: transformer, tagger, parser, ner, attribute_ruler, lemmatizer."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+spacy = ">=3.4.0,<3.5.0"
+spacy-transformers = ">=1.1.2,<1.2.0"
+
+[package.source]
+type = "url"
+url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.4.0/en_core_web_trf-3.4.0-py3-none-any.whl"
+
+[[package]]
 name = "filelock"
 version = "3.7.1"
 description = "A platform independent file lock."
@@ -329,6 +345,14 @@ th = ["pythainlp (>=2.0)"]
 transformers = ["spacy-transformers (>=1.1.2,<1.2.0)"]
 
 [[package]]
+name = "spacy-alignments"
+version = "0.8.5"
+description = "A spaCy package for the Rust tokenizations library"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "spacy-legacy"
 version = "3.0.9"
 description = "Legacy registered functions for spaCy backwards compatibility"
@@ -346,6 +370,34 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 wasabi = ">=0.8.1,<1.1.0"
+
+[[package]]
+name = "spacy-transformers"
+version = "1.1.7"
+description = "spaCy pipelines for pre-trained BERT and other transformers"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+spacy = ">=3.1.3,<4.0.0"
+spacy-alignments = ">=0.7.2,<1.0.0"
+srsly = ">=2.4.0,<3.0.0"
+torch = ">=1.6.0"
+transformers = ">=3.4.0,<4.21.0"
+
+[package.extras]
+cuda = ["cupy (>=5.0.0b4)"]
+cuda100 = ["cupy-cuda100 (>=5.0.0b4)"]
+cuda101 = ["cupy-cuda101 (>=5.0.0b4)"]
+cuda102 = ["cupy-cuda102 (>=5.0.0b4)"]
+cuda110 = ["cupy-cuda110 (>=5.0.0b4)"]
+cuda111 = ["cupy-cuda111 (>=5.0.0b4)"]
+cuda112 = ["cupy-cuda112 (>=5.0.0b4)"]
+cuda80 = ["cupy-cuda80 (>=5.0.0b4)"]
+cuda90 = ["cupy-cuda90 (>=5.0.0b4)"]
+cuda91 = ["cupy-cuda91 (>=5.0.0b4)"]
+cuda92 = ["cupy-cuda92 (>=5.0.0b4)"]
 
 [[package]]
 name = "srsly"
@@ -546,7 +598,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ad9e844f24913778f8ffbc7fb7e1a63b69eb109eb9f50ebb7f1f9a81e649aad3"
+content-hash = "931dd00c8bd968e482987bfb65d324ba0fe33332aeb8faa77228a4d67267486d"
 
 [metadata.files]
 blis = []
@@ -565,6 +617,7 @@ colorama = [
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
 ]
 cymem = []
+en-core-web-trf = []
 filelock = []
 huggingface-hub = []
 idna = [
@@ -670,8 +723,10 @@ regex = []
 requests = []
 smart-open = []
 spacy = []
+spacy-alignments = []
 spacy-legacy = []
 spacy-loggers = []
+spacy-transformers = []
 srsly = []
 thinc = []
 tokenizers = []

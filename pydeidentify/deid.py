@@ -1,6 +1,31 @@
-from typing import Tuple, Dict, Union, List
+from functools import lru_cache
+from typing import Dict
 import spacy
 
+
+SUPPORTED_ENTITIES: Dict[str, str] = {
+    "PERSON": "People, including fictional.",
+    "NORP": "Nationalities or religious or political groups.",
+    "FAC": "Buildings, airports, highways, bridges, etc.",
+    "ORG": "Companies, agencies, institutions, etc.",
+    "GPE": "Countries, cities, states.",
+    "LOC": "Non-GPE locations, mountain ranges, bodies of water.",
+    "PRODUCT": "Objects, vehicles, foods, etc. (Not services.)",
+    "EVENT": "Named hurricanes, battles, wars, sports events, etc.",
+    "WORK_OF_ART": "Titles of books, songs, etc.",
+    "LAW": "Named documents made into laws.",
+    "LANGUAGE": "Any named language.",
+    "DATE": "Absolute or relative dates or periods.",
+    "TIME": "Times smaller than a day.",
+    "PERCENT": "Percentage, including ”%“.",
+    "MONEY": "Monetary values, including unit.",
+    "QUANTITY": "Measurements, as of weight or distance.",
+    "ORDINAL": "“first”, “second”, etc.",
+    "CARDINAL": "Numerals that do not fall under another type.",
+}
+
+
+@lru_cache(maxsize=2)
 def replace_words_with_map(text: str, mapping: Dict[str, str]) -> str:
     """
     A basic utility function to replace text with lookup table,
@@ -54,46 +79,42 @@ class Deidentifier:
     A class that deidentifies a piece of text, using a pre-trained named entity recognition pipeline from transformers
 
     :param text: text to deidentify
-    :param tokenizer: tokenizer to use for the named entity recognition pipeline
-    :param classifier: classifier to use for the named entity recognition pipeline
-    :param aggregation_strategy: aggregation strategy to use for the named entity recognition pipeline
-    :param include_misc: whether to include the "MISC" class when deidentifying, note that this class often contains non-entities
+    :param included_entity_types: entities that will be deidentified, see SUPPORTED_ENTITIES for all supported entities
+    :param exceptions: snippets that will not be deidentified
     """
 
     def __init__(
         self,
-        spacy_pipe: str = "en_core_web_trf",
-        included_entity_types: set = {"PERSON", "ORG", "GPE", "DATE"},
-        exceptions: set = {}
+        included_entity_types: set = {
+            "PERSON",
+            "ORG",
+            "FAC",
+            "LOC",
+            "DATE"
+        },
+        exceptions: set = {},
     ):
-        self.named_entity_pipe = spacy.load(spacy_pipe)
+        self.named_entity_pipe = spacy.load("en_core_web_trf")
         self.included_entity_types = included_entity_types
         self.exceptions = exceptions
 
-    def deidentify(
-        self, text: str
-    ) -> Tuple[str, Dict[str, str], Dict[str, str]]:
+    def deidentify(self, text: str) -> DeidentifiedText:
         """
         Deidentify the input text, returns an instance of DeidentifiedText
 
         :param text: text to deidentify, can be a string or a list of strings
         :returns: a DeidentifiedText object
         """
-        if isinstance(text, str):
-            text = [text]
-
-        # TODO: make sure this takes batched input as well
-        text = "\n".join(text)
 
         d_encode = {}
         d_decode = {}
 
         counts = {k: 0 for k in self.included_entity_types}
         for ent in self.named_entity_pipe(text).ents:
-            cls = ent["entity_group"]
-            name = ent["word"]
-            if cls != "MISC" or self.include_misc:
-                if name not in d_encode:
+            cls = ent.label_
+            name = ent.text
+            if cls in self.included_entity_types:
+                if name not in d_encode and name not in self.exceptions:
                     d_decode[cls + str(counts[cls])] = name
                     d_encode[name] = cls + str(counts[cls])
                     text = text.replace(name, cls + str(counts[cls]))
@@ -103,5 +124,5 @@ class Deidentifier:
 
         return DeidentifiedText(text, d_encode, d_decode, counts)
 
-    def __call__(self, text: str) -> Tuple[str, Dict[str, str], Dict[str, str]]:
+    def __call__(self, text: str) -> DeidentifiedText:
         return self.deidentify(text)
