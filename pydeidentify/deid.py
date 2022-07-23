@@ -1,21 +1,12 @@
-from typing import Tuple, Dict, Union, List
-from transformers import AutoTokenizer, AutoModelForTokenClassification
-from transformers import pipeline
+from pydeidentify.utils import replace_words_with_map, cached_model_download
+from typing import Dict
+import spacy
+import warnings
 
 
-def replace_words_with_map(text: str, mapping: Dict[str, str]) -> str:
-    """
-    A basic utility function to replace text with lookup table,
-    use this with either of the dictionaries/maps that are created by Deidentifier (decode/encode).
 
-    :param text: text that will be replaced
-    :param mapping: dictionary that maps from original text to replacement text
-    :returns: a string with the text replaced
-    """
-    for k, v in mapping.items():
-        text = text.replace(k, v)
-    return text
-
+# Catch benign warnings from spacy about CUDA
+warnings.filterwarnings("ignore", category=UserWarning)
 
 class DeidentifiedText:
     """
@@ -56,55 +47,39 @@ class Deidentifier:
     A class that deidentifies a piece of text, using a pre-trained named entity recognition pipeline from transformers
 
     :param text: text to deidentify
-    :param tokenizer: tokenizer to use for the named entity recognition pipeline
-    :param classifier: classifier to use for the named entity recognition pipeline
-    :param aggregation_strategy: aggregation strategy to use for the named entity recognition pipeline
-    :param include_misc: whether to include the "MISC" class when deidentifying, note that this class often contains non-entities
+    :param included_entity_types: entities that will be deidentified, see SUPPORTED_ENTITIES for all supported entities
+    :param exceptions: snippets that will not be deidentified
+    :param spacy_model: en_core_web_trf comes installed with pydeidentify by default, see https://spacy.io/models/ for more models and langauges
     """
 
     def __init__(
         self,
-        tokenizer: str = "dslim/bert-base-NER",
-        classifier: str = "dslim/bert-base-NER",
-        aggregation_strategy: str = "max",
-        include_misc: bool = False,
+        included_entity_types: set = {"PERSON", "ORG", "FAC", "LOC", "GPE", "DATE"},
+        exceptions: set = {},
+        spacy_model: str = "en_core_web_trf",
     ):
-        self.include_misc = include_misc
+        cached_model_download(spacy_model)
+        self.named_entity_pipe = spacy.load(spacy_model)
+        self.included_entity_types = included_entity_types
+        self.exceptions = exceptions
 
-        tokenizer = AutoTokenizer.from_pretrained(tokenizer)
-        classifier = AutoModelForTokenClassification.from_pretrained(classifier)
-
-        self.named_entity_pipe = pipeline(
-            "ner",
-            model=classifier,
-            tokenizer=tokenizer,
-            aggregation_strategy=aggregation_strategy,
-        )
-
-    def deidentify(
-        self, text: Union[str, List[str]]
-    ) -> Tuple[str, Dict[str, str], Dict[str, str]]:
+    def deidentify(self, text: str) -> DeidentifiedText:
         """
         Deidentify the input text, returns an instance of DeidentifiedText
 
         :param text: text to deidentify, can be a string or a list of strings
         :returns: a DeidentifiedText object
         """
-        if isinstance(text, str):
-            text = [text]
-
-        ents = [ent for ent_list in self.named_entity_pipe(text) for ent in ent_list]
-        text = "\n".join(text)
 
         d_encode = {}
         d_decode = {}
 
-        counts = {"PER": 0, "ORG": 0, "LOC": 0, "MISC": 0}
-        for ent in ents:
-            cls = ent["entity_group"]
-            name = ent["word"]
-            if cls != "MISC" or self.include_misc:
-                if name not in d_encode:
+        counts = {k: 0 for k in self.included_entity_types}
+        for ent in self.named_entity_pipe(text).ents:
+            cls = ent.label_
+            name = ent.text
+            if cls in self.included_entity_types:
+                if name not in d_encode and name not in self.exceptions:
                     d_decode[cls + str(counts[cls])] = name
                     d_encode[name] = cls + str(counts[cls])
                     text = text.replace(name, cls + str(counts[cls]))
@@ -114,5 +89,5 @@ class Deidentifier:
 
         return DeidentifiedText(text, d_encode, d_decode, counts)
 
-    def __call__(self, text: str) -> Tuple[str, Dict[str, str], Dict[str, str]]:
+    def __call__(self, text: str) -> DeidentifiedText:
         return self.deidentify(text)
