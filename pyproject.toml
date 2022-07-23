@@ -10,6 +10,7 @@ license = "MIT"
 python = "^3.8"
 spacy = "^3.4.0"
 en-core-web-trf = {url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.4.0/en_core_web_trf-3.4.0-py3-none-any.whl"}
+spacy-transformers = "^1.1.7"
 
 [tool.poetry.dev-dependencies]
 

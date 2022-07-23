@@ -6,6 +6,7 @@ from pydeidentify import (
 )
 
 text = """
+This text was copied from a public domain website by Lucasc-99, the author of this code. We will exclude Lucasc-99 from the deidentification process. Thus the term Lucasc-99 will not be replaced.
 Nineteen Eighty-Four (also stylised as 1984) is a dystopian social science fiction novel and cautionary tale written by the English writer George Orwell.
 It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime.
 Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.
@@ -24,13 +25,12 @@ The next point is the color of the mature caterpillars, some of which are brown.
 """
 
 # Deidentify the above text using the Deidentifier class
-# below are the default arguments... you may simply use Deidentifier() for the same effect
 d = Deidentifier(
-    included_entity_types={"PERSON", "ORG", "FAC", "LOC", "DATE"}, exceptions={}
+    included_entity_types={"PERSON", "ORG", "FAC", "LOC", "GPE", "DATE"}, exceptions={"Lucasc-99"}
 )
 
-# To see the full list of entities, use the SUPPORTED_ENTITIES constant
-print(SUPPORTED_ENTITIES)
+# To see the full list of entities and what they mean, use the SUPPORTED_ENTITIES constant
+print(f"Supported Entities and Meanings:\n{SUPPORTED_ENTITIES}")
 
 
 # Run the pipeline

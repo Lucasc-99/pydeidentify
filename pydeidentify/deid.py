@@ -1,7 +1,9 @@
-from functools import lru_cache
 from typing import Dict
 import spacy
+import warnings
 
+# Catch benign warnings from spacy about CUDA
+warnings.filterwarnings("ignore", category=UserWarning)
 
 SUPPORTED_ENTITIES: Dict[str, str] = {
     "PERSON": "People, including fictional.",
@@ -25,7 +27,6 @@ SUPPORTED_ENTITIES: Dict[str, str] = {
 }
 
 
-@lru_cache(maxsize=2)
 def replace_words_with_map(text: str, mapping: Dict[str, str]) -> str:
     """
     A basic utility function to replace text with lookup table,
@@ -85,13 +86,7 @@ class Deidentifier:
 
     def __init__(
         self,
-        included_entity_types: set = {
-            "PERSON",
-            "ORG",
-            "FAC",
-            "LOC",
-            "DATE"
-        },
+        included_entity_types: set = {"PERSON", "ORG", "FAC", "LOC", "GPE", "DATE"},
         exceptions: set = {},
     ):
         self.named_entity_pipe = spacy.load("en_core_web_trf")
