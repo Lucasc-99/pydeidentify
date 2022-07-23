@@ -64,22 +64,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "en-core-web-trf"
-version = "3.4.0"
-description = "English transformer pipeline (roberta-base). Components: transformer, tagger, parser, ner, attribute_ruler, lemmatizer."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-spacy = ">=3.4.0,<3.5.0"
-spacy-transformers = ">=1.1.2,<1.2.0"
-
-[package.source]
-type = "file"
-url = "models/en_core_web_trf-3.4.0-py3-none-any.whl"
-
-[[package]]
 name = "filelock"
 version = "3.7.1"
 description = "A platform independent file lock."
@@ -598,7 +582,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "77ede35d600b078372298ab8b73e7221b81cb55f180f9298562102edf6f182e7"
+content-hash = "b65e88b22527fc3411b4764bc596221a5ed7d8bad0cea8840a2f9629ba471e08"
 
 [metadata.files]
 blis = []
@@ -617,9 +601,6 @@ colorama = [
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
 ]
 cymem = []
-en-core-web-trf = [
-    {file = "en_core_web_trf-3.4.0-py3-none-any.whl", hash = "sha256:e73726240e3ec82b2d5c465213cf1add927f7c0907f725203f8ea53382b44a45"},
-]
 filelock = []
 huggingface-hub = []
 idna = [

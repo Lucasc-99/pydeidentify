@@ -167,8 +167,3 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-
-# Large files used to build the package
-models/
-models/**
-models/en_core_web_trf-3.4.0-py3-none-any.whl
