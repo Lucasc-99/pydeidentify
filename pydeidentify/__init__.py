@@ -1,1 +1,2 @@
-from pydeidentify.deid import Deidentifier, DeidentifiedText, replace_words_with_map, SUPPORTED_ENTITIES
+from pydeidentify.deid import Deidentifier, DeidentifiedText
+from pydeidentify.utils import cached_model_download, replace_words_with_map, SUPPORTED_ENTITIES
