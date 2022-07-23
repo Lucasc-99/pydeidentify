@@ -1,7 +1,5 @@
 from typing import Tuple, Dict, Union, List
-from transformers import AutoTokenizer, AutoModelForTokenClassification
-from transformers import pipeline
-
+import spacy
 
 def replace_words_with_map(text: str, mapping: Dict[str, str]) -> str:
     """
@@ -64,25 +62,16 @@ class Deidentifier:
 
     def __init__(
         self,
-        tokenizer: str = "dslim/bert-base-NER",
-        classifier: str = "dslim/bert-base-NER",
-        aggregation_strategy: str = "max",
-        include_misc: bool = False,
+        spacy_pipe: str = "en_core_web_trf",
+        included_entity_types: set = {"PERSON", "ORG", "GPE", "DATE"},
+        exceptions: set = {}
     ):
-        self.include_misc = include_misc
-
-        tokenizer = AutoTokenizer.from_pretrained(tokenizer)
-        classifier = AutoModelForTokenClassification.from_pretrained(classifier)
-
-        self.named_entity_pipe = pipeline(
-            "ner",
-            model=classifier,
-            tokenizer=tokenizer,
-            aggregation_strategy=aggregation_strategy,
-        )
+        self.named_entity_pipe = spacy.load(spacy_pipe)
+        self.included_entity_types = included_entity_types
+        self.exceptions = exceptions
 
     def deidentify(
-        self, text: Union[str, List[str]]
+        self, text: str
     ) -> Tuple[str, Dict[str, str], Dict[str, str]]:
         """
         Deidentify the input text, returns an instance of DeidentifiedText
@@ -93,14 +82,14 @@ class Deidentifier:
         if isinstance(text, str):
             text = [text]
 
-        ents = [ent for ent_list in self.named_entity_pipe(text) for ent in ent_list]
+        # TODO: make sure this takes batched input as well
         text = "\n".join(text)
 
         d_encode = {}
         d_decode = {}
 
-        counts = {"PER": 0, "ORG": 0, "LOC": 0, "MISC": 0}
-        for ent in ents:
+        counts = {k: 0 for k in self.included_entity_types}
+        for ent in self.named_entity_pipe(text).ents:
             cls = ent["entity_group"]
             name = ent["word"]
             if cls != "MISC" or self.include_misc:
