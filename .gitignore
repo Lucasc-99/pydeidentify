@@ -171,4 +171,4 @@ cython_debug/
 # Large files used to build the package
 models/
 models/**
-en_core_web_trf-3.4.0-py3-none-any.whl
+models/en_core_web_trf-3.4.0-py3-none-any.whl

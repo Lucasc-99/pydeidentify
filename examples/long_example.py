@@ -31,7 +31,7 @@ d = Deidentifier(
 )
 
 # To see the full list of entities and what they mean, use the SUPPORTED_ENTITIES constant
-print(f"Supported Entities and Meanings:\n{SUPPORTED_ENTITIES}")
+print(f"Supported Entities and Meanings:\n{SUPPORTED_ENTITIES}\n")
 
 
 # Run the pipeline

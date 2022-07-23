@@ -76,8 +76,8 @@ spacy = ">=3.4.0,<3.5.0"
 spacy-transformers = ">=1.1.2,<1.2.0"
 
 [package.source]
-type = "url"
-url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_trf-3.4.0/en_core_web_trf-3.4.0-py3-none-any.whl"
+type = "file"
+url = "models/en_core_web_trf-3.4.0-py3-none-any.whl"
 
 [[package]]
 name = "filelock"
@@ -598,7 +598,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "a2c2e68849f20a140e15afd6fddf6f11a297000ac044715d682b1eae79dfc3fb"
+content-hash = "77ede35d600b078372298ab8b73e7221b81cb55f180f9298562102edf6f182e7"
 
 [metadata.files]
 blis = []
@@ -617,7 +617,9 @@ colorama = [
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
 ]
 cymem = []
-en-core-web-trf = []
+en-core-web-trf = [
+    {file = "en_core_web_trf-3.4.0-py3-none-any.whl", hash = "sha256:e73726240e3ec82b2d5c465213cf1add927f7c0907f725203f8ea53382b44a45"},
+]
 filelock = []
 huggingface-hub = []
 idna = [
