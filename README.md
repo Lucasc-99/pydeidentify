@@ -41,6 +41,10 @@ print(d_text) # My name is PERSON0, I'm from GPE0, GPE1 and I like to create pyt
 print(d_text.encode_mapping) # {'Joe Biden': 'PERSON0', 'Scranton': 'GPE0', 'Pennsylvania': 'GPE1', '12-1-1999': 'DATE0'}
 print(d_text.decode_mapping) # {'PERSON0': 'Joe Biden', 'GPE0': 'Scranton', 'GPE1': 'Pennsylvania', 'DATE0': '12-1-1999'}
 print(d_text.counts) # {'ORG': 0, 'LOC': 0, 'PERSON': 1, 'GPE': 2, 'DATE': 1, 'FAC': 0}
+
+# Use any spacy model that supports named entity recognition by passing it's name in the spacy_model parameter
+# The line below loads the chinese version of the default english model: 'en_core_web_trf'
+d_spanish = Deidentifier(spacy_model="zh_core_web_trf") 
 ```
 
 

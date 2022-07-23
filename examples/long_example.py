@@ -28,6 +28,7 @@ The next point is the color of the mature caterpillars, some of which are brown.
 d = Deidentifier(
     included_entity_types={"PERSON", "ORG", "FAC", "LOC", "GPE", "DATE"},
     exceptions={"Lucasc-99"},
+    spacy_model="en_core_web_trf",
 )
 
 # To see the full list of entities and what they mean, use the SUPPORTED_ENTITIES constant
