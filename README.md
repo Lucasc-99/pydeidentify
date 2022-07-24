@@ -45,6 +45,9 @@ d_chinese = Deidentifier(spacy_model="zh_core_web_trf")
 
 See all available langauges and pipelines at https://spacy.io/models
 
+There is no need to download these, simply pass a pipeline by name into the Deidentifier class and  
+pydeidentify will automatically download and cache it
+
 ## Get and Run Example Code with pip
 ```bash
 $ git clone https://github.com/Lucasc-99/pydeidentify
