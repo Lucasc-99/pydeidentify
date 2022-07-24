@@ -2,6 +2,8 @@
 
 A simple tool for text deidentification, built on spacy's state-of-the-art named entity recognition pipeline, now supporting 22 languages.
 
+I created this with absolute simplicity in mind, get started deidentifying with a single pip command and 3 lines of python!
+
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pydeidentify.
