@@ -10,11 +10,6 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install pydeide
 $ pip3 install pydeidentify
 ```
 
-Using poetry
-```bash
-$ poetry add pydeidentify
-```
-
 ## Usage
 
 DISCLAIMER: this tool is not 100% accurate, and may miss some entities
@@ -50,14 +45,23 @@ d_chinese = Deidentifier(spacy_model="zh_core_web_trf")
 
 See all available langauges and pipelines at https://spacy.io/models
 
+## Get and Run Example Code with pip
+```bash
+$ git clone https://github.com/Lucasc-99/pydeidentify
+$ cd pydeidentify
+$ pip3 install pydeidentify
+$ python3 examples/long_example.py
+$ python3 examples/short_example.py
+```
+
 ## Get and Run Example Code with Poetry
 install poetry at https://python-poetry.org/docs/#installation
 ```bash
 $ git clone https://github.com/Lucasc-99/pydeidentify
 $ cd pydeidentify
 $ poetry install
-$ poetry run python examples/long_example
-$ poetry run python examples/short_example
+$ poetry run python examples/long_example.py
+$ poetry run python examples/short_example.py
 ```
 
 ## Contributing
