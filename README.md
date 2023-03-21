@@ -1,5 +1,7 @@
 # pydeidentify
 
+[![Downloads](https://static.pepy.tech/personalized-badge/pydeidentify?period=total&units=international_system&left_color=black&right_color=green&left_text=Downloads)](https://pepy.tech/project/pydeidentify)
+
 A simple tool for text deidentification, built on spacy's state-of-the-art named entity recognition pipeline, now supporting 22 languages.
 
 I created this with absolute simplicity in mind, get started deidentifying with a single pip command and 3 lines of python!
